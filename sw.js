@@ -1,4 +1,4 @@
-const CACHE_NAME = 'offlinegdz-v9';
+const CACHE_NAME = 'offlinegdz-v10';
 const ASSETS = [
     './',
     './index.html',
@@ -10,7 +10,8 @@ const ASSETS = [
     './data/biology-gdz-import.json',
     './data/chemistry-8-gabrielyan-euroki.json',
     './data/geography-euroki-import.json',
-    './data/geometry-reshak-import.json'
+    './data/geometry-reshak-import.json',
+    './data/russian7-baranov-budu5.json'
 ];
 
 self.addEventListener('install', (e) => {

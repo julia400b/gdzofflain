@@ -45,12 +45,13 @@ const BUNDLED_ASSETS = [
     'data/biology-gdz-import.json',
     'data/chemistry-8-gabrielyan-euroki.json',
     'data/geography-euroki-import.json',
-    'data/geometry-reshak-import.json'
+    'data/geometry-reshak-import.json',
+    'data/russian7-baranov-budu5.json'
 ];
 const BOOTSTRAP_KEY = 'gdz_bootstrapped_v1';
 const GRADE_KEY = 'gdz_selected_grade';
 const SUPPORTED_GRADES = [7, 8];
-const OFFLINE_CACHE_NAME = 'offlinegdz-v7';
+const OFFLINE_CACHE_NAME = 'offlinegdz-v8';
 
 function getSelectedGrade() {
     const grade = Number(localStorage.getItem(GRADE_KEY));
@@ -1174,6 +1175,7 @@ function subjectColor(name) {
         case 'химия': return '#F44336';
         case 'алгебра': return '#1565C0';
         case 'физика': return '#FF5722';
+        case 'русский язык': return '#5C6BC0';
         default: return '#1565C0';
     }
 }
