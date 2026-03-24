@@ -1,0 +1,89 @@
+{
+  "subjects": [
+    {
+      "name": "Русский язык",
+      "sort_order": 5,
+      "textbooks": [
+        {
+          "title": "Русский язык 7 класс, Баранов, Ладыженская (Новое издание, Euroki)",
+          "authors": "Баранов, Ладыженская, Тростенцова",
+          "year": 2024,
+          "source_url": "https://www.euroki.org/gdz/ru/russkiy/7_klass/baranov-278",
+          "search_mode": "taskNumber",
+          "tasks": [
+            {
+              "task_number": "1",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3061119.png?v=1736765979)"
+            },
+            {
+              "task_number": "2",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3061230.png?v=1736765979)"
+            },
+            {
+              "task_number": "3",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3061341.png?v=1736765979)"
+            },
+            {
+              "task_number": "4",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3061452.png?v=1736765979)"
+            },
+            {
+              "task_number": "5",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3061563.png?v=1736765979)"
+            },
+            {
+              "task_number": "10",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3061890.png?v=1736765979)"
+            },
+            {
+              "task_number": "20",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3062100.png?v=1736765979)"
+            },
+            {
+              "task_number": "50",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3062500.png?v=1736765979)"
+            },
+            {
+              "task_number": "100",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3063000.png?v=1736765979)"
+            },
+            {
+              "task_number": "150",
+              "paragraph": null,
+              "page": null,
+              "title": null,
+              "solution_text": "![image](https://imgs.euroki.org/books/gdzs/5118/3063500.png?v=1736765979)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

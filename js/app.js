@@ -45,13 +45,14 @@ const BUNDLED_ASSETS = [
     'data/biology-gdz-import.json',
     'data/chemistry-8-gabrielyan-euroki.json',
     'data/geography-euroki-import.json',
-    'data/geometry-reshak-import.json'
+    'data/geometry-reshak-import.json',
+    'data/russian7-baranov-euroki.json'
 ];
-const BOOTSTRAP_KEY = 'gdz_bootstrapped_v1';
+const BOOTSTRAP_KEY = 'gdz_bootstrapped_v2';
 const RUSSIAN7_DELETE_KEY = 'gdz_delete_russian7_baranov_from_pwa_v1';
 const GRADE_KEY = 'gdz_selected_grade';
 const SUPPORTED_GRADES = [7, 8];
-const OFFLINE_CACHE_NAME = 'offlinegdz-v12';
+const OFFLINE_CACHE_NAME = 'offlinegdz-v13';
 
 function getSelectedGrade() {
     const grade = Number(localStorage.getItem(GRADE_KEY));
@@ -274,22 +275,22 @@ async function bootstrapBundledData() {
 }
 
 async function runBundledMigrations() {
-    await removeRussian7BundledTextbooks();
+    await removeRussian7Budu5Textbooks();
 }
 
-async function removeRussian7BundledTextbooks() {
+async function removeRussian7Budu5Textbooks() {
     if (localStorage.getItem(RUSSIAN7_DELETE_KEY)) return;
 
     try {
         const textbooks = await db.getTextbooks();
-        const russian7Books = textbooks.filter(isRussian7BaranovBook);
-        if (russian7Books.length === 0) {
+        const budu5Books = textbooks.filter(t => isRussian7BaranovBook(t) && textbookSearchHaystack(t).includes('budu5'));
+        if (budu5Books.length === 0) {
             localStorage.setItem(RUSSIAN7_DELETE_KEY, Date.now().toString());
             return;
         }
 
-        const deletedIds = new Set(russian7Books.map(book => book.id));
-        for (const book of russian7Books) {
+        const deletedIds = new Set(budu5Books.map(book => book.id));
+        for (const book of budu5Books) {
             await db.deleteTextbook(book.id);
         }
 
@@ -303,10 +304,9 @@ async function removeRussian7BundledTextbooks() {
             renderLibrary();
         }
 
-        showToast('Учебник русского языка удалён из PWA');
         localStorage.setItem(RUSSIAN7_DELETE_KEY, Date.now().toString());
     } catch (error) {
-        console.warn('Russian 7 removal failed', error);
+        console.warn('Russian 7 budu5 removal failed', error);
     }
 }
 
