@@ -394,6 +394,26 @@ function showToast(msg) {
     setTimeout(() => el.remove(), 3000);
 }
 
+function taskBadgeNumber(task, fallbackIndex) {
+    if (task?.paragraph) return task.paragraph.replace(/^§\s*/, '');
+    if (task?.taskNumber) return task.taskNumber.toString().trim();
+    if (task?.page) return task.page.toString();
+    return fallbackIndex.toString();
+}
+
+function taskHeadingLabel(task, fallbackIndex) {
+    if (task?.paragraph) return `§ ${task.paragraph.replace(/^§\s*/, '')}`;
+    if (task?.taskNumber) return `№ ${task.taskNumber}`;
+    if (task?.title) return task.title;
+    if (task?.page) return `Стр. ${task.page}`;
+    return `Задание ${fallbackIndex}`;
+}
+
+function taskSecondaryTitle(task) {
+    if (!task?.title) return null;
+    return task.paragraph || task.taskNumber ? task.title : null;
+}
+
 // === Library Tab ===
 async function renderLibrary() {
     const selectedGrade = getSelectedGrade();
@@ -530,9 +550,9 @@ async function renderTextbookContent(textbookId) {
 
     for (let i = 0; i < displayed.length; i++) {
         const task = displayed[i];
-        const paraLabel = task.paragraph ? `§ ${task.paragraph.replace(/^§\s*/, '')}` : null;
-        const numLabel = paraLabel || task.title || `Задание ${i + 1}`;
-        const paraNum = task.paragraph ? task.paragraph.replace(/^§\s*/, '') : (i + 1).toString();
+        const numLabel = taskHeadingLabel(task, i + 1);
+        const paraNum = taskBadgeNumber(task, i + 1);
+        const secondaryTitle = taskSecondaryTitle(task);
 
         html += `
         <div class="card para-card" data-task-id="${task.id}">
@@ -540,7 +560,7 @@ async function renderTextbookContent(textbookId) {
                 <div class="para-num">${esc(paraNum.substring(0, 4))}</div>
                 <div class="para-info">
                     <h4>${esc(numLabel)}</h4>
-                    ${task.title && task.paragraph ? `<div class="para-title">${esc(task.title)}</div>` : ''}
+                    ${secondaryTitle ? `<div class="para-title">${esc(secondaryTitle)}</div>` : ''}
                     <div class="para-preview">${esc(task.previewText)}</div>
                 </div>
                 <div class="para-arrow">
@@ -568,16 +588,16 @@ async function renderTextbookContent(textbookId) {
             let extra = '';
             for (let i = 50; i < tasks.length; i++) {
                 const task = tasks[i];
-                const paraLabel = task.paragraph ? `§ ${task.paragraph.replace(/^§\s*/, '')}` : null;
-                const numLabel = paraLabel || task.title || `Задание ${i + 1}`;
-                const paraNum = task.paragraph ? task.paragraph.replace(/^§\s*/, '') : (i + 1).toString();
+                const numLabel = taskHeadingLabel(task, i + 1);
+                const paraNum = taskBadgeNumber(task, i + 1);
+                const secondaryTitle = taskSecondaryTitle(task);
                 extra += `
                 <div class="card para-card" data-task-id="${task.id}">
                     <div class="card-body">
                         <div class="para-num">${esc(paraNum.substring(0, 4))}</div>
                         <div class="para-info">
                             <h4>${esc(numLabel)}</h4>
-                            ${task.title && task.paragraph ? `<div class="para-title">${esc(task.title)}</div>` : ''}
+                            ${secondaryTitle ? `<div class="para-title">${esc(secondaryTitle)}</div>` : ''}
                             <div class="para-preview">${esc(task.previewText)}</div>
                         </div>
                         <div class="para-arrow">
