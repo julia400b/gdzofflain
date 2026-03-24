@@ -124,34 +124,14 @@ function splitIntoParagraphs(text, sectionHeaders = new Set()) {
     if (explicitBlocks.length > 1) {
         return restorePreservedBlocks(explicitBlocks.flatMap(block => {
             const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
-            if (lines.length > 1 && lines.every(l =>
-                l.startsWith('-') || l.startsWith('•') || NUMBER_ITEM_RE.test(l) || l.length <= 140
-            )) {
-                return lines;
-            }
-            return [block];
+            return lines.length > 1 ? lines : [block];
         }), preservedBlocks);
     }
 
-    // Single block — try line-by-line
+    // Single block — split by newlines (each \n is an intentional paragraph break)
     const lines = protectedText.split('\n').map(l => l.trim()).filter(Boolean);
     if (lines.length > 1) {
-        const hasImages = lines.some(l => MARKDOWN_IMAGE_RE.test(l));
-        const structuredCount = lines.filter(l =>
-            isSectionHeader(l, sectionHeaders) ||
-            MINOR_SECTION_HEADER_RE.test(l) ||
-            ANSWER_PREFIX_RE.test(l) ||
-            LOWER_LETTER_ITEM_RE.test(l) ||
-            NUMBER_ITEM_RE.test(l) ||
-            l.startsWith('*') ||
-            l.startsWith('-') ||
-            l.length <= 180 ||
-            MARKDOWN_IMAGE_RE.test(l) ||
-            /^__GDZ_TABLE_\d+__$/.test(l)
-        ).length;
-        if (hasImages || structuredCount >= lines.length / 2) {
-            return restorePreservedBlocks(lines, preservedBlocks);
-        }
+        return restorePreservedBlocks(lines, preservedBlocks);
     }
 
     // Sentence split for long text
