@@ -501,7 +501,15 @@ body {
     border-bottom: 0.5px solid var(--outline);
 }
 
-.block-paragraph { font-size: 14px; line-height: 1.6; }
+.solution-section > * + * {
+    margin-top: 12px;
+}
+
+.block-paragraph {
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
 .block-header {
     background: rgba(21,101,192,0.08);
     border-radius: var(--radius-sm);
@@ -509,17 +517,20 @@ body {
     font-size: 14px;
     font-weight: 600;
     color: var(--primary-dark);
+    white-space: pre-wrap;
 }
 .block-emphasis {
     font-size: 14px;
     font-weight: 500;
     color: var(--primary-dark);
     line-height: 1.5;
+    white-space: pre-wrap;
 }
 .block-bullet {
     font-size: 14px;
     padding-left: 12px;
     line-height: 1.5;
+    white-space: pre-wrap;
 }
 .block-bullet::before { content: "• "; }
 .block-numbered {
@@ -527,6 +538,7 @@ body {
     padding-left: 12px;
     font-weight: 500;
     line-height: 1.5;
+    white-space: pre-wrap;
 }
 .block-image {
     border-radius: var(--radius-md);
