@@ -1,0 +1,26 @@
+{
+    "name": "ГДЗ Офлайн",
+    "short_name": "ГДЗ",
+    "description": "Офлайн решебник — ГДЗ для школьников",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#F5F5F5",
+    "theme_color": "#1565C0",
+    "lang": "ru",
+    "icons": [
+        {
+            "src": "icons/icon-192.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icons/icon-512.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ]
+}

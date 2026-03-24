@@ -1,0 +1,439 @@
+{
+  "subjects": [
+    {
+      "name": "Биология",
+      "sort_order": 1,
+      "textbooks": [
+        {
+          "title": "Биология 8 класс, Пасечник, Суматохин (Базовый уровень, GDZ.ru)",
+          "authors": "Пасечник, Суматохин, Гапонюк",
+          "year": 2023,
+          "source_url": "https://gdz.ru/class-8/biologiya/pasechnik-bazovyj-uroven/",
+          "search_mode": "paragraph",
+          "tasks": [
+            {
+              "task_number": null,
+              "paragraph": "§1",
+              "page": 6,
+              "title": "Параграф 1",
+              "solution_text": "Стр. 6\n![Решение](asset://solution-media/biologiya8/0000_6491b42ab8af4.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ab921e.webp)\n\nСтр. 9\n![Решение](asset://solution-media/biologiya8/0000_6491b42ab95fd.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ab98ba.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ab9e96.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aba2b8.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aba5f1.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§2",
+              "page": 10,
+              "title": "Параграф 2",
+              "solution_text": "Стр. 10\n![Решение](asset://solution-media/biologiya8/0000_6491b42aba912.webp)\n\nСтр. 13\n![Решение](asset://solution-media/biologiya8/0000_6491b42abacbb.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abb0a4.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§3",
+              "page": 14,
+              "title": "Параграф 3",
+              "solution_text": "Стр. 14\n![Решение](asset://solution-media/biologiya8/0000_6491b42aca074.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aca269.webp)\n\nСтр. 15\n![Решение](asset://solution-media/biologiya8/0000_6491b42aca6b8.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acab32.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acaf2c.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§4",
+              "page": 16,
+              "title": "Параграф 4",
+              "solution_text": "Стр. 16\n![Решение](asset://solution-media/biologiya8/0000_6491b42adb8db.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adbcf9.webp)\n\nСтр. 19\n![Решение](asset://solution-media/biologiya8/0000_6491b42adc03c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adc3cd.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adc722.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adcc0a.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adcedf.webp)\n\nСтр. 20\n![Решение](asset://solution-media/biologiya8/0000_6491b42add1e7.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§5",
+              "page": 22,
+              "title": "Параграф 5",
+              "solution_text": "Стр. 22\n![Решение](asset://solution-media/biologiya8/0000_6491b42aea66c.webp)\n\nСтр. 24\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeaa9d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeaf6e.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeb39a.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeb7f2.webp)\n\nСтр. 25\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeba82.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aebe2f.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aec1a9.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aec4a2.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aec868.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§6",
+              "page": 26,
+              "title": "Параграф 6",
+              "solution_text": "Стр. 26\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0780e.webp)\n\nСтр. 29\n![Решение](asset://solution-media/biologiya8/0000_6491b42b07b46.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b07f84.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0832c.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§7",
+              "page": 30,
+              "title": "Параграф 7",
+              "solution_text": "Стр. 30\n![Решение](asset://solution-media/biologiya8/0000_6491b42b14b8d.webp)\n\nСтр. 32\n![Решение](asset://solution-media/biologiya8/0000_6491b42b14e9c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b15368.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b156e9.webp)\n\nСтр. 33\n![Решение](asset://solution-media/biologiya8/0000_6491b42b15b97.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b15f72.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§8",
+              "page": 34,
+              "title": "Параграф 8",
+              "solution_text": "Стр. 34\n![Решение](asset://solution-media/biologiya8/0000_6491b42b1641a.webp)\n\nСтр. 35\n![Решение](asset://solution-media/biologiya8/0000_6491b42b167bd.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b16bfa.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§9",
+              "page": 36,
+              "title": "Параграф 9",
+              "solution_text": "Стр. 36\n![Решение](asset://solution-media/biologiya8/0000_6491b42b16f9e.webp)\n\nСтр. 37\n![Решение](asset://solution-media/biologiya8/0000_6491b42b1721e.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b17674.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§10",
+              "page": 38,
+              "title": "Параграф 10",
+              "solution_text": "Стр. 38\n![Решение](asset://solution-media/biologiya8/0000_6491b42b17acf.webp)\n\nСтр. 40\n![Решение](asset://solution-media/biologiya8/0000_6491b42b17e37.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b182a0.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b18575.webp)\n\nСтр. 41\n![Решение](asset://solution-media/biologiya8/0000_6491b42b18863.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b18cf6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b19034.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§11",
+              "page": 42,
+              "title": "Параграф 11",
+              "solution_text": "Стр. 42\n![Решение](asset://solution-media/biologiya8/0000_6491b42abb433.webp)\n\nСтр. 45\n![Решение](asset://solution-media/biologiya8/0000_6491b42abb724.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abbb53.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abbf2f.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§12",
+              "page": 46,
+              "title": "Параграф 12",
+              "solution_text": "Стр. 46\n![Решение](asset://solution-media/biologiya8/0000_6491b42abc386.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abc7a6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abcc64.webp)\n\nСтр. 48\n![Решение](asset://solution-media/biologiya8/0000_6491b42abcea7.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abd365.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abd6c7.webp)\n\nСтр. 49\n![Решение](asset://solution-media/biologiya8/0000_6491b42abda49.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§13",
+              "page": 50,
+              "title": "Параграф 13",
+              "solution_text": "Стр. 50\n![Решение](asset://solution-media/biologiya8/0000_6491b42abdde6.webp)\n\nСтр. 53\n![Решение](asset://solution-media/biologiya8/0000_6491b42abe117.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abe580.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abe9c1.webp)\n\nСтр. 55\n![Решение](asset://solution-media/biologiya8/0000_6491b42abf458.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abf81e.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42abfbf6.webp)\n\nСтр. 56\n![Решение](asset://solution-media/biologiya8/0000_6491b42abfec2.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§14",
+              "page": 58,
+              "title": "Параграф 14",
+              "solution_text": "Стр. 58\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac02a6.webp)\n\nСтр. 61\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac062b.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac0a72.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac0df1.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§15",
+              "page": 62,
+              "title": "Параграф 15",
+              "solution_text": "Стр. 62\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac1194.webp)\n\nСтр. 65\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac14f6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac19b8.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac1c89.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac2048.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac2230.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac24be.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac2735.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac2adf.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§16",
+              "page": 66,
+              "title": "Параграф 16",
+              "solution_text": "Стр. 66\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac2ddb.webp)\n\nСтр. 68\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac30f8.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac351c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac3953.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac3cf0.webp)\n\nСтр. 69\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac3fa0.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac41cf.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac4560.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac47af.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac4b68.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§17",
+              "page": 70,
+              "title": "Параграф 17",
+              "solution_text": "Стр. 70\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac4f48.webp)\n\nСтр. 73\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac5222.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac550e.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac595d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac5e0a.webp)\n\nСтр. 74\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac6064.webp)\n\nСтр. 76\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac644e.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§18",
+              "page": 78,
+              "title": "Параграф 18",
+              "solution_text": "Стр. 78\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac67a2.webp)\n\nСтр. 81\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac6b58.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac6fb7.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac7287.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac761d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac795d.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§19",
+              "page": 82,
+              "title": "Параграф 19",
+              "solution_text": "Стр. 82\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac7c40.webp)\n\nСтр. 85\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac7f2d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac83f8.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac87da.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac8c0c.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§20",
+              "page": 86,
+              "title": "Параграф 20",
+              "solution_text": "Стр. 86\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac8eb9.webp)\n\nСтр. 89\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac91ca.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac9604.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac99e9.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ac9cc7.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§21",
+              "page": 90,
+              "title": "Параграф 21",
+              "solution_text": "Стр. 90\n![Решение](asset://solution-media/biologiya8/0000_6491b42acb347.webp)\n\nСтр. 92\n![Решение](asset://solution-media/biologiya8/0000_6491b42acb5b5.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acba7a.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acbefc.webp)\n\nСтр. 93\n![Решение](asset://solution-media/biologiya8/0000_6491b42acc19b.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acc5f4.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§22",
+              "page": 94,
+              "title": "Параграф 22",
+              "solution_text": "Стр. 94\n![Решение](asset://solution-media/biologiya8/0000_6491b42acc8dc.webp)\n\nСтр. 97\n![Решение](asset://solution-media/biologiya8/0000_6491b42accbc1.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acd0bf.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acd4cd.webp)\n\nСтр. 98\n![Решение](asset://solution-media/biologiya8/0000_6491b42acd89e.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acdc4d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ace082.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ace340.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ace786.webp)\n\nСтр. 99\n![Решение](asset://solution-media/biologiya8/0000_6491b42acead2.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§23",
+              "page": 100,
+              "title": "Параграф 23",
+              "solution_text": "Стр. 100\n![Решение](asset://solution-media/biologiya8/0000_6491b42aced04.webp)\n\nСтр. 103\n![Решение](asset://solution-media/biologiya8/0000_6491b42acf057.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acf4de.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acf8ba.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acfbbb.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42acff09.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad01cb.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad056a.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§24",
+              "page": 104,
+              "title": "Параграф 24",
+              "solution_text": "Стр. 104\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad08f0.webp)\n\nСтр. 106\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad0d8f.webp)\n\nСтр. 107\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad102c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad1481.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad17be.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad1ad9.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad1ee8.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad21ed.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad269f.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad2b2a.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§25",
+              "page": 108,
+              "title": "Параграф 25",
+              "solution_text": "Стр. 108\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad2f31.webp)\n\nСтр. 110\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad321c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad369f.webp)\n\nСтр. 111\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad3a81.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad3e31.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§26",
+              "page": 112,
+              "title": "Параграф 26",
+              "solution_text": "Стр. 112\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad420b.webp)\n\nСтр. 115\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad452f.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad49b6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad4dea.webp)\n\nСтр. 116\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad5083.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad542b.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad5814.webp)\n\nСтр. 117\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad5c1d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad6048.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§27",
+              "page": 118,
+              "title": "Параграф 27",
+              "solution_text": "Стр. 118\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad62c5.webp)\n\nСтр. 120\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad6678.webp)\n\nСтр. 121\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad6af3.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad6f30.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad72c9.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§28",
+              "page": 122,
+              "title": "Параграф 28",
+              "solution_text": "Стр. 122\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad7667.webp)\n\nСтр. 126\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad7995.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad7d8c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad815b.webp)\n\nСтр. 127\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad8539.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§29",
+              "page": 128,
+              "title": "Параграф 29",
+              "solution_text": "Стр. 128\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad8942.webp)\n\nСтр. 131\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad8c69.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad8f22.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad9408.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad9771.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad9b53.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ad9e26.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ada213.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§30",
+              "page": 132,
+              "title": "Параграф 30",
+              "solution_text": "Стр. 132\n![Решение](asset://solution-media/biologiya8/0000_6491b42ada5d9.webp)\n\nСтр. 135\n![Решение](asset://solution-media/biologiya8/0000_6491b42ada88d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adac6b.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adb0f2.webp)\n\nСтр. 138\n![Решение](asset://solution-media/biologiya8/0000_6491b42adb5bc.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§31",
+              "page": 140,
+              "title": "Параграф 31",
+              "solution_text": "Стр. 140\n![Решение](asset://solution-media/biologiya8/0000_6491b42add669.webp)\n\nСтр. 143\n![Решение](asset://solution-media/biologiya8/0000_6491b42add963.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42addd87.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§32",
+              "page": 144,
+              "title": "Параграф 32",
+              "solution_text": "Стр. 144\n![Решение](asset://solution-media/biologiya8/0000_6491b42ade106.webp)\n\nСтр. 147\n![Решение](asset://solution-media/biologiya8/0000_6491b42ade3fd.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ade887.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adecdf.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adf103.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§33",
+              "page": 148,
+              "title": "Параграф 33",
+              "solution_text": "Стр. 148\n![Решение](asset://solution-media/biologiya8/0000_6491b42adf464.webp)\n\nСтр. 150\n![Решение](asset://solution-media/biologiya8/0000_6491b42adf742.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adfba5.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42adfe79.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae025a.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae061f.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae0a0c.webp)\n\nСтр. 151\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae0d30.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae10e1.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§34",
+              "page": 152,
+              "title": "Параграф 34",
+              "solution_text": "Стр. 152\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae1503.webp)\n\nСтр. 154\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae17c6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae1bc3.webp)\n\nСтр. 155\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae1ec5.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae226b.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§35",
+              "page": 156,
+              "title": "Параграф 35",
+              "solution_text": "Стр. 156\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae2604.webp)\n\nСтр. 158\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae2a28.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae2e43.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae311b.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae3419.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§36",
+              "page": 160,
+              "title": "Параграф 36",
+              "solution_text": "Стр. 160\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae3835.webp)\n\nСтр. 162\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae3b45.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae3eb2.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae4399.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae47d5.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae4bd4.webp)\n\nСтр. 163\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae5027.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae546d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae58c7.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae5ce4.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§37",
+              "page": 164,
+              "title": "Параграф 37",
+              "solution_text": "Стр. 164\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae601e.webp)\n\nСтр. 165\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae62d6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae66f7.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§38",
+              "page": 166,
+              "title": "Параграф 38",
+              "solution_text": "Стр. 166\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae6aa3.webp)\n\nСтр. 167\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae6d96.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae71a5.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§39",
+              "page": 168,
+              "title": "Параграф 39",
+              "solution_text": "Стр. 168\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae7408.webp)\n\nСтр. 169\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae7718.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae7bac.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§40",
+              "page": 170,
+              "title": "Параграф 40",
+              "solution_text": "Стр. 170\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae7f1f.webp)\n\nСтр. 172\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae81fe.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae86ad.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae8aa4.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae8f92.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae91e6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae9658.webp)\n\nСтр. 173\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae9a4c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42ae9efe.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aea2db.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§41",
+              "page": 174,
+              "title": "Параграф 41",
+              "solution_text": "Стр. 174\n![Решение](asset://solution-media/biologiya8/0000_6491b42aecace.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aecd7c.webp)\n\nСтр. 176\n![Решение](asset://solution-media/biologiya8/0000_6491b42aed280.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aed6ab.webp)\n\nСтр. 177\n![Решение](asset://solution-media/biologiya8/0000_6491b42aed9b6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeddae.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§42",
+              "page": 178,
+              "title": "Параграф 42",
+              "solution_text": "Стр. 178\n![Решение](asset://solution-media/biologiya8/0000_6491b42aee104.webp)\n\nСтр. 180\n![Решение](asset://solution-media/biologiya8/0000_6491b42aee3c5.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aee7c1.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeeb71.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aeefa7.webp)\n\nСтр. 181\n![Решение](asset://solution-media/biologiya8/0000_6491b42aef2d0.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aef6f2.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42aefb36.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§43",
+              "page": 182,
+              "title": "Параграф 43",
+              "solution_text": "Стр. 182\n![Решение](asset://solution-media/biologiya8/0000_6491b42aefed4.webp)\n\nСтр. 185\n![Решение](asset://solution-media/biologiya8/0000_6491b42af01a4.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af06ac.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af0abd.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af0f00.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af12aa.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af1749.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af1b0f.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§44",
+              "page": 186,
+              "title": "Параграф 44",
+              "solution_text": "Стр. 186\n![Решение](asset://solution-media/biologiya8/0000_6491b42af1ed0.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af224d.webp)\n\nСтр. 189\n![Решение](asset://solution-media/biologiya8/0000_6491b42af25d6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af2a17.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§45",
+              "page": 190,
+              "title": "Параграф 45",
+              "solution_text": "Стр. 190\n![Решение](asset://solution-media/biologiya8/0000_6491b42af2df5.webp)\n\nСтр. 193\n![Решение](asset://solution-media/biologiya8/0000_6491b42af31bc.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af3569.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af397f.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af3d4c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42af4073.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0021a.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§46",
+              "page": 194,
+              "title": "Параграф 46",
+              "solution_text": "Стр. 194\n![Решение](asset://solution-media/biologiya8/0000_6491b42b00672.webp)\n\nСтр. 196\n![Решение](asset://solution-media/biologiya8/0000_6491b42b00941.webp)\n\nСтр. 197\n![Решение](asset://solution-media/biologiya8/0000_6491b42b00d39.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b01111.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b01511.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b018ca.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b01ce5.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§47",
+              "page": 198,
+              "title": "Параграф 47",
+              "solution_text": "Стр. 198\n![Решение](asset://solution-media/biologiya8/0000_6491b42b02096.webp)\n\nСтр. 200\n![Решение](asset://solution-media/biologiya8/0000_6491b42b02392.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b027d5.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b02c84.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0304c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b03489.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0385d.webp)\n\nСтр. 201\n![Решение](asset://solution-media/biologiya8/0000_6491b42b03c06.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b04051.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0446a.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§48",
+              "page": 202,
+              "title": "Параграф 48",
+              "solution_text": "Стр. 202\n![Решение](asset://solution-media/biologiya8/0000_6491b42b04805.webp)\n\nСтр. 205\n![Решение](asset://solution-media/biologiya8/0000_6491b42b04b3c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b04fd6.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b052ce.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§49",
+              "page": 206,
+              "title": "Параграф 49",
+              "solution_text": "Стр. 206\n![Решение](asset://solution-media/biologiya8/0000_6491b42b056cd.webp)\n\nСтр. 209\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0674e.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§50",
+              "page": 210,
+              "title": "Параграф 50",
+              "solution_text": "Стр. 210\n![Решение](asset://solution-media/biologiya8/0000_6491b42b06a95.webp)\n\nСтр. 215\n![Решение](asset://solution-media/biologiya8/0000_6491b42b06d5f.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b07007.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b07476.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§51",
+              "page": 216,
+              "title": "Параграф 51",
+              "solution_text": "Стр. 216\n![Решение](asset://solution-media/biologiya8/0000_6491b42b085a7.webp)\n\nСтр. 217\n![Решение](asset://solution-media/biologiya8/0000_6491b42b088b7.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b08cf4.webp)\n\nСтр. 218\n![Решение](asset://solution-media/biologiya8/0000_6491b42b08fbb.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b09328.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b096eb.webp)\n\nСтр. 222\n![Решение](asset://solution-media/biologiya8/0000_6491b42b09b07.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§52",
+              "page": 224,
+              "title": "Параграф 52",
+              "solution_text": "Стр. 224\n![Решение](asset://solution-media/biologiya8/0000_6491b42b09df4.webp)\n\nСтр. 225\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0a13e.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0a52f.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§53",
+              "page": 226,
+              "title": "Параграф 53",
+              "solution_text": "Стр. 226\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0a7ae.webp)\n\nСтр. 227\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0a9f1.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0ae12.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0b254.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§54",
+              "page": 228,
+              "title": "Параграф 54",
+              "solution_text": "Стр. 228\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0b554.webp)\n\nСтр. 230\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0b7d0.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0bc37.webp)\n\nСтр. 232\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0bed1.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§55",
+              "page": 234,
+              "title": "Параграф 55",
+              "solution_text": "Стр. 234\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0c18e.webp)\n\nСтр. 238\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0c568.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0c9ea.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0cda0.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§56",
+              "page": 240,
+              "title": "Параграф 56",
+              "solution_text": "Стр. 240\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0d08c.webp)\n\nСтр. 242\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0d40c.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0d811.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0dc22.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0e0b6.webp)\n\nСтр. 243\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0e3af.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0e827.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0eb6d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0ef6d.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§57",
+              "page": 244,
+              "title": "Параграф 57",
+              "solution_text": "Стр. 244\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0f1de.webp)\n\nСтр. 248\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0f453.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0f879.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0fc66.webp)\n\nСтр. 249\n![Решение](asset://solution-media/biologiya8/0000_6491b42b0fec7.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b10346.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b107b6.webp)\n\nСтр. 250\n![Решение](asset://solution-media/biologiya8/0000_6491b42b10b3c.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§58",
+              "page": 252,
+              "title": "Параграф 58",
+              "solution_text": "Стр. 252\n![Решение](asset://solution-media/biologiya8/0000_6491b42b10ed8.webp)\n\nСтр. 255\n![Решение](asset://solution-media/biologiya8/0000_6491b42b1126e.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b115ca.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b119a2.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b11d71.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b121e7.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§59",
+              "page": 256,
+              "title": "Параграф 59",
+              "solution_text": "Стр. 256\n![Решение](asset://solution-media/biologiya8/0000_6491b42b125b0.webp)\n\nСтр. 261\n![Решение](asset://solution-media/biologiya8/0000_6491b42b12879.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b12c7b.webp)"
+            },
+            {
+              "task_number": null,
+              "paragraph": "§60",
+              "page": 262,
+              "title": "Параграф 60",
+              "solution_text": "Стр. 262\n![Решение](asset://solution-media/biologiya8/0000_6491b42b13086.webp)\n\nСтр. 264\n![Решение](asset://solution-media/biologiya8/0000_6491b42b1339d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b13721.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b13aa6.webp)\n\nСтр. 265\n![Решение](asset://solution-media/biologiya8/0000_6491b42b13df9.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b1415d.webp)\n\n![Решение](asset://solution-media/biologiya8/0000_6491b42b1447f.webp)\n\nСтр. 266\n![Решение](asset://solution-media/biologiya8/0000_6491b42b1482e.webp)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
