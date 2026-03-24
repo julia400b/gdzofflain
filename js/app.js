@@ -7,6 +7,7 @@ let currentTextbookId = null;
 let currentTaskId = null;
 let solutionContext = []; // taskId list for prev/next
 let searchTimeout = null;
+const naturalCollator = new Intl.Collator('ru', { numeric: true, sensitivity: 'base' });
 
 const $ = (sel, el) => (el || document).querySelector(sel);
 const $$ = (sel, el) => [...(el || document).querySelectorAll(sel)];
@@ -16,6 +17,29 @@ const esc = (s) => {
     el.textContent = s || '';
     return el.innerHTML;
 };
+
+function compareNullableNumbers(a, b) {
+    const aNum = Number(a);
+    const bNum = Number(b);
+    const aMissing = Number.isNaN(aNum);
+    const bMissing = Number.isNaN(bNum);
+
+    if (aMissing && bMissing) return 0;
+    if (aMissing) return 1;
+    if (bMissing) return -1;
+    return aNum - bNum;
+}
+
+function compareNaturalLabels(a, b) {
+    const left = (a || '').toString().trim();
+    const right = (b || '').toString().trim();
+
+    if (!left && !right) return 0;
+    if (!left) return 1;
+    if (!right) return -1;
+
+    return naturalCollator.compare(left, right);
+}
 
 const BUNDLED_ASSETS = [
     'data/biology-gdz-import.json',
@@ -234,23 +258,19 @@ async function renderTextbookContent(textbookId) {
     $('#bottomNav').classList.add('hidden');
 
     const tasks = await db.getTasksByTextbook(textbookId);
+    const primaryMode = tb.searchMode === 'paragraph' ? 'paragraph' : 'taskNumber';
     tasks.sort((a, b) => {
-        // Extract numeric values for proper natural sorting
-        const aNum = parseFloat(a.taskNumber) || 0;
-        const bNum = parseFloat(b.taskNumber) || 0;
-        if (aNum !== bNum) return aNum - bNum;
+        const primaryCompare = compareNaturalLabels(a[primaryMode], b[primaryMode]);
+        if (primaryCompare !== 0) return primaryCompare;
 
-        // Sort by paragraph number (§1, §2, ... §10, §11)
-        const aPara = parseFloat((a.paragraph || '').replace(/[^0-9.]/g, '')) || 0;
-        const bPara = parseFloat((b.paragraph || '').replace(/[^0-9.]/g, '')) || 0;
-        if (aPara !== bPara) return aPara - bPara;
+        const secondaryMode = primaryMode === 'paragraph' ? 'taskNumber' : 'paragraph';
+        const secondaryCompare = compareNaturalLabels(a[secondaryMode], b[secondaryMode]);
+        if (secondaryCompare !== 0) return secondaryCompare;
 
-        // Sort by page
-        const aPage = a.page || 0;
-        const bPage = b.page || 0;
-        if (aPage !== bPage) return aPage - bPage;
+        const pageCompare = compareNullableNumbers(a.page, b.page);
+        if (pageCompare !== 0) return pageCompare;
 
-        return 0;
+        return compareNullableNumbers(a.id, b.id);
     });
 
     solutionContext = tasks.map(t => t.id);
