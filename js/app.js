@@ -672,13 +672,23 @@ async function renderMore() {
 
     html += `
     <div class="card import-section">
+        <h3>� Изображения для оффлайна</h3>
+        <p>Скачайте все изображения решений, чтобы они работали без интернета</p>
+        <div id="downloadProgress" class="download-progress hidden">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-text" id="progressText">0 / 0</div>
+        </div>
+        <button class="btn-primary" id="downloadImagesBtn">Скачать изображения</button>
+    </div>
+
+    <div class="card import-section">
         <h3>🔄 Перезагрузить встроенные данные</h3>
         <p>Если данные не загрузились автоматически</p>
         <button class="btn-tonal" id="reloadBundledBtn">Загрузить заново</button>
     </div>
 
     <div class="card" style="padding:16px;text-align:center;margin-top:8px">
-        <p style="font-size:12px;color:var(--on-surface-variant)">ГДЗ Офлайн PWA v1.0</p>
+        <p style="font-size:12px;color:var(--on-surface-variant)">ГДЗ Офлайн PWA v1.1</p>
         <p style="font-size:11px;color:var(--on-surface-variant);opacity:0.7">Веб-версия для iPhone/iPad</p>
     </div>`;
 
@@ -727,6 +737,22 @@ async function renderMore() {
         });
     }
 
+    // Download images for offline
+    const dlImgBtn = $('#downloadImagesBtn');
+    if (dlImgBtn) {
+        dlImgBtn.addEventListener('click', async () => {
+            dlImgBtn.disabled = true;
+            dlImgBtn.textContent = 'Подготовка...';
+            try {
+                await downloadAllImagesForOffline();
+            } catch (e) {
+                showToast('Ошибка загрузки: ' + (e.message || e));
+            }
+            dlImgBtn.disabled = false;
+            dlImgBtn.textContent = 'Скачать изображения';
+        });
+    }
+
     // Reload bundled data
     const reloadBtn = $('#reloadBundledBtn');
     if (reloadBtn) {
@@ -736,6 +762,88 @@ async function renderMore() {
             renderMore();
         });
     }
+}
+
+async function getAllImageUrls() {
+    const tasks = await db._all('tasks');
+    const IMAGE_RE = /!\[.*?\]\((.+?)\)/g;
+    const urls = new Set();
+    for (const task of tasks) {
+        const text = task.solutionText || '';
+        let m;
+        while ((m = IMAGE_RE.exec(text)) !== null) {
+            const resolved = resolveImageUrl(m[1].trim());
+            if (resolved && !resolved.startsWith('http')) {
+                urls.add(resolved);
+            }
+        }
+    }
+    return [...urls];
+}
+
+async function downloadAllImagesForOffline() {
+    const urls = await getAllImageUrls();
+    if (urls.length === 0) {
+        showToast('Нет изображений для загрузки');
+        return;
+    }
+
+    const progressDiv = $('#downloadProgress');
+    const progressFill = $('#progressFill');
+    const progressText = $('#progressText');
+    if (progressDiv) progressDiv.classList.remove('hidden');
+
+    const cache = await caches.open('offlinegdz-v5');
+    let done = 0, failed = 0, skipped = 0;
+    const total = urls.length;
+
+    // Check which are already cached
+    const uncached = [];
+    for (const url of urls) {
+        const cached = await cache.match(url);
+        if (cached) {
+            skipped++;
+        } else {
+            uncached.push(url);
+        }
+    }
+
+    if (uncached.length === 0) {
+        showToast(`Все ${total} изображений уже скачаны!`);
+        if (progressDiv) progressDiv.classList.add('hidden');
+        return;
+    }
+
+    done = skipped;
+    const updateProgress = () => {
+        const pct = Math.round((done / total) * 100);
+        if (progressFill) progressFill.style.width = pct + '%';
+        if (progressText) progressText.textContent = `${done} / ${total}` + (failed > 0 ? ` (ошибок: ${failed})` : '');
+    };
+    updateProgress();
+
+    // Download in batches of 6
+    const BATCH = 6;
+    for (let i = 0; i < uncached.length; i += BATCH) {
+        const batch = uncached.slice(i, i + BATCH);
+        await Promise.all(batch.map(async (url) => {
+            try {
+                const resp = await fetch(url);
+                if (resp.ok) {
+                    await cache.put(url, resp);
+                } else {
+                    failed++;
+                }
+            } catch {
+                failed++;
+            }
+            done++;
+            updateProgress();
+        }));
+    }
+
+    showToast(`Готово! Скачано: ${done - skipped - failed}, ошибок: ${failed}`);
+    if (progressDiv) setTimeout(() => progressDiv.classList.add('hidden'), 3000);
 }
 
 // === Helpers ===

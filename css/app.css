@@ -739,3 +739,27 @@ body {
 
 /* File input hidden */
 .file-input { display: none; }
+
+/* Download progress */
+.download-progress {
+    margin-bottom: 12px;
+}
+.progress-bar {
+    height: 8px;
+    background: var(--outline);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.2s ease;
+}
+.progress-text {
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    text-align: center;
+}
