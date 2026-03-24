@@ -1,6 +1,88 @@
 /* db.js — IndexedDB storage layer for OfflineGDZ PWA */
 const DB_NAME = 'offlinegdz';
 const DB_VERSION = 1;
+const SEARCH_COLLATOR = new Intl.Collator('ru', { numeric: true, sensitivity: 'base' });
+
+function normalizeSearchText(value) {
+    return (value || '').toString().trim().toLowerCase();
+}
+
+function normalizeParagraphLabel(value) {
+    return normalizeSearchText(value).replace(/\s+/g, '');
+}
+
+function compareSearchLabels(a, b) {
+    const left = normalizeSearchText(a);
+    const right = normalizeSearchText(b);
+
+    if (!left && !right) return 0;
+    if (!left) return 1;
+    if (!right) return -1;
+
+    return SEARCH_COLLATOR.compare(left, right);
+}
+
+function compareSearchNumbers(a, b) {
+    const left = Number(a);
+    const right = Number(b);
+    const leftMissing = Number.isNaN(left);
+    const rightMissing = Number.isNaN(right);
+
+    if (leftMissing && rightMissing) return 0;
+    if (leftMissing) return 1;
+    if (rightMissing) return -1;
+
+    return left - right;
+}
+
+function getSearchRank(task, textbook, query) {
+    const q = normalizeSearchText(query);
+    if (!q) return Number.NEGATIVE_INFINITY;
+
+    const taskNumber = normalizeSearchText(task.taskNumber);
+    const paragraph = normalizeParagraphLabel(task.paragraph);
+    const title = normalizeSearchText(task.title);
+    const previewText = normalizeSearchText(task.previewText);
+    const page = Number(task.page);
+    const hasNumericQuery = /^\d+$/.test(q);
+    const numericQuery = hasNumericQuery ? Number(q) : Number.NaN;
+    const paragraphQuery = normalizeParagraphLabel(q.startsWith('§') ? q : `§${q}`);
+    const prefersParagraph = textbook?.searchMode === 'paragraph';
+    let score = Number.NEGATIVE_INFINITY;
+
+    if (taskNumber && taskNumber === q) score = Math.max(score, prefersParagraph ? 900 : 1200);
+    if (paragraph && (paragraph === q || paragraph === paragraphQuery)) score = Math.max(score, prefersParagraph ? 1250 : 1050);
+    if (!Number.isNaN(numericQuery) && !Number.isNaN(page) && page === numericQuery) score = Math.max(score, 800);
+    if (title && title === q) score = Math.max(score, 780);
+
+    if (taskNumber && taskNumber.startsWith(q)) score = Math.max(score, prefersParagraph ? 700 : 1020);
+    if (paragraph && (paragraph.startsWith(q) || paragraph.startsWith(paragraphQuery))) score = Math.max(score, prefersParagraph ? 1080 : 860);
+    if (title && title.startsWith(q)) score = Math.max(score, 720);
+
+    if (taskNumber && taskNumber.includes(q)) score = Math.max(score, prefersParagraph ? 500 : 640);
+    if (paragraph && (paragraph.includes(q) || paragraph.includes(paragraphQuery))) score = Math.max(score, prefersParagraph ? 680 : 560);
+    if (title && title.includes(q)) score = Math.max(score, 520);
+    if (q.length >= 3 && previewText && previewText.includes(q)) score = Math.max(score, 140);
+
+    return score;
+}
+
+function compareSearchResults(a, b) {
+    if (a._score !== b._score) return b._score - a._score;
+
+    const aPrimaryMode = a.searchMode === 'paragraph' ? 'paragraph' : 'taskNumber';
+    const bPrimaryMode = b.searchMode === 'paragraph' ? 'paragraph' : 'taskNumber';
+    const primaryCompare = compareSearchLabels(a[aPrimaryMode], b[bPrimaryMode]);
+    if (primaryCompare !== 0) return primaryCompare;
+
+    const secondaryCompare = compareSearchLabels(a[aPrimaryMode === 'paragraph' ? 'taskNumber' : 'paragraph'], b[bPrimaryMode === 'paragraph' ? 'taskNumber' : 'paragraph']);
+    if (secondaryCompare !== 0) return secondaryCompare;
+
+    const pageCompare = compareSearchNumbers(a.page, b.page);
+    if (pageCompare !== 0) return pageCompare;
+
+    return compareSearchNumbers(a.id, b.id);
+}
 
 class GdzDatabase {
     constructor() {
@@ -100,24 +182,31 @@ class GdzDatabase {
         const subjects = await this._all('subjects');
         const tbMap = Object.fromEntries(textbooks.map(t => [t.id, t]));
         const sjMap = Object.fromEntries(subjects.map(s => [s.id, s]));
-        const q = query.toLowerCase().trim();
-        const pageNum = parseInt(q, 10);
+        const q = normalizeSearchText(query);
 
-        return tasks.filter(task => {
+        return tasks.map(task => {
             const tb = tbMap[task.textbookId];
-            if (!tb) return false;
-            if (subjectId && tb.subjectId !== subjectId) return false;
-            if (task.taskNumber && task.taskNumber.toLowerCase().includes(q)) return true;
-            if (task.paragraph && task.paragraph.toLowerCase().includes(q)) return true;
-            if (!isNaN(pageNum) && task.page === pageNum) return true;
-            if (task.title && task.title.toLowerCase().includes(q)) return true;
-            if (q.length >= 3 && task.previewText && task.previewText.toLowerCase().includes(q)) return true;
-            return false;
-        }).slice(0, 200).map(task => {
-            const tb = tbMap[task.textbookId];
+            if (!tb) return null;
+            if (subjectId && tb.subjectId !== subjectId) return null;
+
+            const score = getSearchRank(task, tb, q);
+            if (!Number.isFinite(score)) return null;
+
             const sj = sjMap[tb?.subjectId];
-            return { ...task, textbookTitle: tb?.title, subjectName: sj?.name, seriesTitle: tb?.seriesTitle, partTitle: tb?.partTitle, partOrder: tb?.partOrder };
-        });
+            return {
+                ...task,
+                textbookTitle: tb?.title,
+                subjectName: sj?.name,
+                seriesTitle: tb?.seriesTitle,
+                partTitle: tb?.partTitle,
+                partOrder: tb?.partOrder,
+                searchMode: tb?.searchMode || 'number',
+                _score: score
+            };
+        }).filter(Boolean)
+            .sort(compareSearchResults)
+            .slice(0, 200)
+            .map(({ _score, ...task }) => task);
     }
 
     // === Favorites ===
