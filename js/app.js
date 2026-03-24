@@ -41,13 +41,35 @@ async function init() {
     // Back button
     $('#backBtn').addEventListener('click', goBack);
 
-    // Image overlay
-    $('#closeOverlay').addEventListener('click', () => $('#imageOverlay').classList.add('hidden'));
+    // Image overlay — close on bg click and close button
+    const overlay = $('#imageOverlay');
+    const overlayImg = $('#overlayImage');
+    $('#closeOverlay').addEventListener('click', () => overlay.classList.add('hidden'));
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.classList.add('hidden');
+    });
+    // Double-tap to zoom image in overlay
+    let overlayScale = 1;
+    overlayImg.addEventListener('dblclick', () => {
+        overlayScale = overlayScale > 1 ? 1 : 2.5;
+        overlayImg.style.transform = `scale(${overlayScale})`;
+    });
+    // Reset zoom when overlay closes
+    const resetOverlay = () => { overlayScale = 1; overlayImg.style.transform = ''; };
+    $('#closeOverlay').addEventListener('click', resetOverlay);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) resetOverlay(); });
 
     // Register SW
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(() => {});
     }
+
+    // Hardware/browser back button support
+    window.addEventListener('popstate', () => {
+        if (currentScreen) {
+            goBack();
+        }
+    });
 
     switchTab('library');
 
@@ -196,6 +218,7 @@ async function renderLibrary() {
 async function openTextbook(textbookId) {
     currentScreen = 'textbook';
     currentTextbookId = textbookId;
+    history.pushState({ screen: 'textbook', id: textbookId }, '');
     await renderTextbookContent(textbookId);
 }
 
@@ -253,8 +276,10 @@ async function renderTextbookContent(textbookId) {
 
     content().innerHTML = html;
 
-    $$('.para-card', content()).forEach(el => {
-        el.addEventListener('click', () => openSolution(parseInt(el.dataset.taskId)));
+    // Use event delegation for task card clicks
+    content().addEventListener('click', (e) => {
+        const card = e.target.closest('.para-card');
+        if (card) openSolution(parseInt(card.dataset.taskId));
     });
 
     const showAllBtn = $('#showAllBtn');
@@ -283,9 +308,6 @@ async function renderTextbookContent(textbookId) {
             }
             showAllBtn.remove();
             content().insertAdjacentHTML('beforeend', extra);
-            $$('.para-card', content()).forEach(el => {
-                el.addEventListener('click', () => openSolution(parseInt(el.dataset.taskId)));
-            });
         });
     }
 }
@@ -294,6 +316,7 @@ async function renderTextbookContent(textbookId) {
 async function openSolution(taskId) {
     currentScreen = 'solution';
     currentTaskId = taskId;
+    history.pushState({ screen: 'solution', id: taskId }, '');
     const task = await db.getTask(taskId);
     if (!task) { showToast('Задание не найдено'); return; }
 
@@ -415,25 +438,25 @@ function renderBlocks(blocks) {
         switch (block.type) {
             case 'image':
                 const src = resolveImageUrl(block.source);
-                html += `<div class="block-image"><img src="${esc(src)}" alt="${esc(block.alt || 'Решение')}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>`;
+                html += `<div class="block-image"><img src="${src.replace(/"/g, '&quot;')}" alt="${esc(block.alt || 'Решение')}" loading="lazy" onerror="this.style.display='none';this.parentElement.classList.add('image-error')"></div>`;
                 break;
             case 'table':
                 html += renderTable(block.text);
                 break;
             case 'header':
-                html += `<div class="block-header">${esc(block.text)}</div>`;
+                html += `<div class="block-header">${renderInlineMarkdown(block.text)}</div>`;
                 break;
             case 'emphasis':
-                html += `<div class="block-emphasis">${esc(block.text)}</div>`;
+                html += `<div class="block-emphasis">${renderInlineMarkdown(block.text)}</div>`;
                 break;
             case 'bullet_item':
-                html += `<div class="block-bullet">${esc(block.text)}</div>`;
+                html += `<div class="block-bullet">${renderInlineMarkdown(block.text)}</div>`;
                 break;
             case 'numbered_item':
-                html += `<div class="block-numbered">${esc(block.text)}</div>`;
+                html += `<div class="block-numbered">${renderInlineMarkdown(block.text)}</div>`;
                 break;
             default:
-                html += `<div class="block-paragraph">${esc(block.text)}</div>`;
+                html += `<div class="block-paragraph">${renderInlineMarkdown(block.text)}</div>`;
         }
     }
     return html;
@@ -467,12 +490,17 @@ function renderTable(tableText) {
 }
 
 function bindImageClicks() {
-    $$('.block-image img', content()).forEach(img => {
-        img.addEventListener('click', () => {
+    // Use event delegation to avoid duplicate listeners on edition switch
+    const cont = content();
+    if (cont._imgClickHandler) cont.removeEventListener('click', cont._imgClickHandler);
+    cont._imgClickHandler = (e) => {
+        const img = e.target.closest('.block-image img');
+        if (img && !img.closest('.image-error')) {
             $('#overlayImage').src = img.src;
             $('#imageOverlay').classList.remove('hidden');
-        });
-    });
+        }
+    };
+    cont.addEventListener('click', cont._imgClickHandler);
 }
 
 // === Search Tab ===

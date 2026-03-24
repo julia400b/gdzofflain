@@ -1,6 +1,8 @@
 /* parser.js — solution text parser, mirrors SolutionContentCodec + SolutionParser */
 
 const MARKDOWN_IMAGE_RE = /^!\[(.*?)\]\((.+?)\)$/;
+const BOLD_RE = /\*\*(.+?)\*\*/g;
+const ITALIC_RE = /(?<![*])\*([^*]+?)\*(?![*])/g;
 const TABLE_BLOCK_RE = /^\[\[TABLE\]\]\n([\s\S]+?)\n\[\[\/TABLE\]\]$/;
 const MD_TABLE_RE = /^\|.+\|\n\|(?:\s*:?-{3,}:?\s*\|)+\n(?:\|.*\|\n?)+$/ms;
 const ANSWER_PREFIX_RE = /^Ответ:|^Вывод/;
@@ -24,7 +26,10 @@ function parseSolutionBlocks(text) {
             blocks.push({ type: 'table', text: para.trim() });
         } else if (ANSWER_PREFIX_RE.test(para)) {
             blocks.push({ type: 'emphasis', text: para });
-        } else if (para.startsWith('*') || para.startsWith('-')) {
+        } else if (para.startsWith('**') && para.endsWith('**')) {
+            // Bold line = header
+            blocks.push({ type: 'header', text: para.replace(/^\*\*|\*\*$/g, '') });
+        } else if ((para.startsWith('*') || para.startsWith('-')) && !para.startsWith('**')) {
             blocks.push({ type: 'bullet_item', text: para.replace(/^[*-]\s*/, '') });
         } else if (LOWER_LETTER_ITEM_RE.test(para) || NUMBER_ITEM_RE.test(para)) {
             blocks.push({ type: 'numbered_item', text: para });
@@ -131,4 +136,17 @@ function resolveImageUrl(source) {
         return 'https://www.euroki.org' + trimmed;
     }
     return trimmed;
+}
+
+function renderInlineMarkdown(text) {
+    // Escape HTML first
+    const escaped = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    // Then apply markdown formatting
+    return escaped
+        .replace(BOLD_RE, '<strong>$1</strong>')
+        .replace(ITALIC_RE, '<em>$1</em>');
 }

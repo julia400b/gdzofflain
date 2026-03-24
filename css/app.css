@@ -495,6 +495,19 @@ body {
     width: 100%;
     height: auto;
 }
+.block-image.image-error {
+    background: rgba(229,57,53,0.06);
+    padding: 20px;
+    text-align: center;
+    border: 1px dashed var(--danger);
+}
+.block-image.image-error::after {
+    content: '⚠ Изображение не загружено';
+    display: block;
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 500;
+}
 .block-table {
     overflow-x: auto;
     border-radius: var(--radius-md);
@@ -546,6 +559,9 @@ body {
     max-width: 95%;
     max-height: 90vh;
     object-fit: contain;
+    touch-action: pinch-zoom;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* === Stat Cards Row === */

@@ -111,6 +111,7 @@ class GdzDatabase {
             if (task.paragraph && task.paragraph.toLowerCase().includes(q)) return true;
             if (!isNaN(pageNum) && task.page === pageNum) return true;
             if (task.title && task.title.toLowerCase().includes(q)) return true;
+            if (q.length >= 3 && task.previewText && task.previewText.toLowerCase().includes(q)) return true;
             return false;
         }).slice(0, 200).map(task => {
             const tb = tbMap[task.textbookId];
@@ -141,16 +142,25 @@ class GdzDatabase {
         return !!result;
     }
 
-    async toggleFavorite(taskId) {
-        const store = this._tx(['favorites'], 'readwrite');
-        const existing = await this._req(store.index('taskId').get(taskId));
-        if (existing) {
-            await this._req(store.delete(existing.id));
-            return false;
-        } else {
-            await this._req(store.add({ taskId, addedAt: Date.now() }));
-            return true;
-        }
+    toggleFavorite(taskId) {
+        return new Promise((resolve, reject) => {
+            const tx = this._db.transaction(['favorites'], 'readwrite');
+            const store = tx.objectStore('favorites');
+            const getReq = store.index('taskId').get(taskId);
+            getReq.onsuccess = () => {
+                const existing = getReq.result;
+                if (existing) {
+                    const delReq = store.delete(existing.id);
+                    delReq.onsuccess = () => resolve(false);
+                    delReq.onerror = () => reject(delReq.error);
+                } else {
+                    const addReq = store.add({ taskId, addedAt: Date.now() });
+                    addReq.onsuccess = () => resolve(true);
+                    addReq.onerror = () => reject(addReq.error);
+                }
+            };
+            getReq.onerror = () => reject(getReq.error);
+        });
     }
 
     // === History ===
@@ -170,15 +180,26 @@ class GdzDatabase {
         return result;
     }
 
-    async addHistory(taskId) {
-        const store = this._tx(['history'], 'readwrite');
-        const existing = await this._req(store.index('taskId').get(taskId));
-        if (existing) {
-            existing.viewedAt = Date.now();
-            await this._req(store.put(existing));
-        } else {
-            await this._req(store.add({ taskId, viewedAt: Date.now() }));
-        }
+    addHistory(taskId) {
+        return new Promise((resolve, reject) => {
+            const tx = this._db.transaction(['history'], 'readwrite');
+            const store = tx.objectStore('history');
+            const getReq = store.index('taskId').get(taskId);
+            getReq.onsuccess = () => {
+                const existing = getReq.result;
+                if (existing) {
+                    existing.viewedAt = Date.now();
+                    const putReq = store.put(existing);
+                    putReq.onsuccess = () => resolve();
+                    putReq.onerror = () => reject(putReq.error);
+                } else {
+                    const addReq = store.add({ taskId, viewedAt: Date.now() });
+                    addReq.onsuccess = () => resolve();
+                    addReq.onerror = () => reject(addReq.error);
+                }
+            };
+            getReq.onerror = () => reject(getReq.error);
+        });
     }
 
     async clearHistory() {
@@ -292,13 +313,28 @@ class GdzDatabase {
     async deleteTextbook(textbookId) {
         // Get textbook info before deleting
         const tb = await this.getTextbook(textbookId);
-        // Delete tasks
+        // Delete tasks and cleanup favorites/history
         const tasks = await this.getTasksByTextbook(textbookId);
-        if (tasks.length > 0) {
+        for (const t of tasks) {
             const taskStore = this._tx(['tasks'], 'readwrite');
-            for (const t of tasks) {
-                await this._req(taskStore.delete(t.id));
-            }
+            await this._req(taskStore.delete(t.id));
+            // Clean up orphaned favorites and history
+            try {
+                const favStore = this._tx(['favorites'], 'readwrite');
+                const fav = await this._req(favStore.index('taskId').get(t.id));
+                if (fav) {
+                    const favStore2 = this._tx(['favorites'], 'readwrite');
+                    await this._req(favStore2.delete(fav.id));
+                }
+            } catch(e) {}
+            try {
+                const histStore = this._tx(['history'], 'readwrite');
+                const hist = await this._req(histStore.index('taskId').get(t.id));
+                if (hist) {
+                    const histStore2 = this._tx(['history'], 'readwrite');
+                    await this._req(histStore2.delete(hist.id));
+                }
+            } catch(e) {}
         }
         // Delete textbook
         const tbStore = this._tx(['textbooks'], 'readwrite');

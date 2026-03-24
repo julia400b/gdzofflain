@@ -1,4 +1,4 @@
-const CACHE_NAME = 'offlinegdz-v3';
+const CACHE_NAME = 'offlinegdz-v4';
 const ASSETS = [
     './',
     './index.html',
@@ -49,7 +49,7 @@ self.addEventListener('fetch', (e) => {
                         caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
                     }
                     return resp;
-                });
+                }).catch(() => new Response('', { status: 404, statusText: 'Offline' }));
             })
         );
         return;
@@ -61,6 +61,6 @@ self.addEventListener('fetch', (e) => {
             const clone = resp.clone();
             caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
             return resp;
-        }))
+        }).catch(() => new Response('Offline', { status: 503 })))
     );
 });
