@@ -258,7 +258,7 @@ body {
 }
 
 /* === Subject Card === */
-.subject-card { cursor: pointer; }
+.subject-card { cursor: default; }
 .subject-card .card-body {
     display: flex;
     flex-direction: column;
@@ -296,6 +296,26 @@ body {
     font-size: 12px;
     color: var(--on-surface-variant);
     margin-top: 2px;
+}
+
+.subject-parts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.subject-part-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+}
+
+.subject-part-count {
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    white-space: nowrap;
 }
 
 .btn-tonal {

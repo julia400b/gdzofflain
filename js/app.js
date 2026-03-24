@@ -49,9 +49,11 @@ const BUNDLED_ASSETS = [
     'data/russian7-baranov-budu5.json'
 ];
 const BOOTSTRAP_KEY = 'gdz_bootstrapped_v1';
+const RUSSIAN7_MIGRATION_KEY = 'gdz_migration_russian7_baranov_parts_v1';
+const RUSSIAN7_ASSET = 'data/russian7-baranov-budu5.json';
 const GRADE_KEY = 'gdz_selected_grade';
 const SUPPORTED_GRADES = [7, 8];
-const OFFLINE_CACHE_NAME = 'offlinegdz-v8';
+const OFFLINE_CACHE_NAME = 'offlinegdz-v11';
 
 function getSelectedGrade() {
     const grade = Number(localStorage.getItem(GRADE_KEY));
@@ -98,8 +100,48 @@ function extractSupportedGrades(value) {
     return null;
 }
 
+function normalizeLookupText(value) {
+    return (value || '').toString().trim().toLowerCase();
+}
+
+function textbookSearchHaystack(item) {
+    return [
+        item?.seriesTitle,
+        item?.textbookSeriesTitle,
+        item?.title,
+        item?.textbookTitle,
+        item?.partTitle,
+        item?.authors
+    ].filter(Boolean).join(' ').toLowerCase();
+}
+
+function textbookSeriesName(item) {
+    const value = [
+        item?.seriesTitle,
+        item?.textbookSeriesTitle,
+        item?.title,
+        item?.textbookTitle
+    ].find(Boolean) || '';
+
+    return value
+        .replace(/([.,]\s*учебник\s+часть\s+\d+.*)$/iu, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function isRussian7BaranovBook(item) {
+    const haystack = textbookSearchHaystack(item);
+    return haystack.includes('русский язык 7 класс') && haystack.includes('баранов');
+}
+
+function isBookPart(item, expectedPartTitle) {
+    const part = normalizeLookupText(expectedPartTitle);
+    return normalizeLookupText(item?.partTitle) === part || textbookSearchHaystack(item).includes(part);
+}
+
 function textbookGradeLabel(item) {
     return [
+        textbookSeriesName(item),
         item?.seriesTitle,
         item?.textbookSeriesTitle,
         item?.title,
@@ -206,6 +248,8 @@ async function init() {
     if (!localStorage.getItem(BOOTSTRAP_KEY)) {
         await bootstrapBundledData();
     }
+
+    await runBundledMigrations();
 }
 
 async function bootstrapBundledData() {
@@ -228,6 +272,69 @@ async function bootstrapBundledData() {
     if (totalImported > 0) {
         showToast(`Загружено ${totalImported} заданий`);
         if (currentTab === 'library' && !currentScreen) renderLibrary();
+    }
+}
+
+async function runBundledMigrations() {
+    await ensureRussian7BundledParts();
+}
+
+async function ensureRussian7BundledParts() {
+    if (localStorage.getItem(RUSSIAN7_MIGRATION_KEY)) return;
+
+    try {
+        const textbooks = await db.getTextbooks();
+        const russian7Books = textbooks.filter(isRussian7BaranovBook);
+        const hasPart1 = russian7Books.some(book => isBookPart(book, 'Часть 1'));
+        const hasPart2 = russian7Books.some(book => isBookPart(book, 'Часть 2'));
+
+        if (hasPart1 && hasPart2) {
+            localStorage.setItem(RUSSIAN7_MIGRATION_KEY, Date.now().toString());
+            return;
+        }
+
+        const response = await fetch(RUSSIAN7_ASSET);
+        if (!response.ok) return;
+
+        const text = await response.text();
+        const payload = JSON.parse(normalizeJson(text));
+        const subject = payload?.subjects?.find(item => normalizeLookupText(item?.name) === 'русский язык');
+        if (!subject) return;
+        const subjectBooks = subject?.textbooks || [];
+
+        const missingBooks = subjectBooks.filter(book => {
+            if (!isRussian7BaranovBook(book)) return false;
+            if (russian7Books.length === 0) return true;
+            if (!hasPart1 && isBookPart(book, 'Часть 1')) return true;
+            if (!hasPart2 && isBookPart(book, 'Часть 2')) return true;
+            return false;
+        });
+
+        if (missingBooks.length === 0) {
+            localStorage.setItem(RUSSIAN7_MIGRATION_KEY, Date.now().toString());
+            return;
+        }
+
+        const result = await db.importPayload({
+            subjects: [{
+                name: subject.name,
+                sort_order: subject.sort_order,
+                textbooks: missingBooks
+            }]
+        });
+
+        if (result.importedTasks > 0) {
+            showToast(missingBooks.length > 1
+                ? 'Добавлены части учебника русского языка'
+                : 'Добавлена недостающая часть учебника русского языка');
+            if (currentTab === 'library' && !currentScreen) {
+                renderLibrary();
+            }
+        }
+
+        localStorage.setItem(RUSSIAN7_MIGRATION_KEY, Date.now().toString());
+    } catch (error) {
+        console.warn('Russian 7 migration failed', error);
     }
 }
 
@@ -319,26 +426,43 @@ async function renderLibrary() {
     } else {
         html += `<div class="section-title">Предметы</div>`;
         for (const subject of sorted) {
-            const books = (tbBySubject[subject.id] || []).sort((a, b) => (a.partOrder || 0) - (b.partOrder || 0));
+            const books = (tbBySubject[subject.id] || []).sort((a, b) =>
+                compareNullableNumbers(a.partOrder, b.partOrder)
+                || compareNaturalLabels(a.partTitle, b.partTitle)
+                || compareNaturalLabels(a.title, b.title)
+            );
             const firstBook = books[0];
             if (!firstBook) continue;
             const totalTasks = books.reduce((sum, b) => sum + (taskCountByTb[b.id] || 0), 0);
             const icon = subjectIcon(subject.name);
             const color = subjectColor(subject.name);
-            const meta = [firstBook.authors, firstBook.year, totalTasks > 0 ? `${totalTasks} заданий` : null].filter(Boolean).join(' • ');
+            const displayTitle = textbookSeriesName(firstBook) || firstBook.title;
+            const meta = [
+                firstBook.authors,
+                firstBook.year,
+                books.length > 1 ? `${books.length} части` : null,
+                totalTasks > 0 ? `${totalTasks} заданий` : null
+            ].filter(Boolean).join(' • ');
+            const actionsHtml = books.length > 1
+                ? `<div class="subject-parts">${books.map(book => `
+                    <button class="btn-tonal subject-part-btn" data-book-id="${book.id}">
+                        ${esc(book.partTitle || book.title)}
+                        ${taskCountByTb[book.id] ? `<span class="subject-part-count">${taskCountByTb[book.id]} заданий</span>` : ''}
+                    </button>`).join('')}</div>`
+                : `<button class="btn-tonal" data-book-id="${firstBook.id}">Открыть учебник</button>`;
 
             html += `
-            <div class="card subject-card" data-book-id="${firstBook.id}">
+            <div class="card subject-card">
                 <div class="card-body">
                     <div class="subject-header">
                         <div class="subject-icon" style="background:${color}20;color:${color}">${icon}</div>
                         <div class="subject-info">
                             <h3>${esc(subject.name)}</h3>
-                            <div class="book-title">${esc(firstBook.title)}</div>
+                            <div class="book-title">${esc(displayTitle)}</div>
                             ${meta ? `<div class="meta">${esc(meta)}</div>` : ''}
                         </div>
                     </div>
-                    <button class="btn-tonal" data-book-id="${firstBook.id}">Открыть учебник</button>
+                    ${actionsHtml}
                 </div>
             </div>`;
         }
@@ -347,10 +471,10 @@ async function renderLibrary() {
     content().innerHTML = html;
 
     // Click handlers
-    $$('.subject-card, .btn-tonal[data-book-id]', content()).forEach(el => {
+    $$('[data-book-id]', content()).forEach(el => {
         el.addEventListener('click', (e) => {
             e.stopPropagation();
-            const bookId = parseInt(el.dataset.bookId || el.closest('[data-book-id]')?.dataset.bookId);
+            const bookId = parseInt(el.dataset.bookId || e.currentTarget?.dataset.bookId);
             if (bookId) openTextbook(bookId);
         });
     });
