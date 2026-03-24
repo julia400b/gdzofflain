@@ -188,6 +188,49 @@ body {
     color: var(--on-surface-variant);
 }
 
+.grade-select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.grade-select-card {
+    border: 1px solid var(--outline);
+    padding: 20px 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.grade-select-card:active {
+    transform: scale(0.98);
+}
+
+.grade-select-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.grade-select-card p {
+    font-size: 13px;
+    color: var(--on-surface-variant);
+}
+
+.grade-select-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    background: rgba(21,101,192,0.1);
+    color: var(--primary);
+    font-size: 22px;
+    font-weight: 700;
+}
+
 /* === Meta Chip === */
 .chip {
     display: inline-block;
@@ -762,4 +805,10 @@ body {
     font-size: 12px;
     color: var(--on-surface-variant);
     text-align: center;
+}
+
+@media (max-width: 480px) {
+    .grade-select-grid {
+        grid-template-columns: 1fr;
+    }
 }

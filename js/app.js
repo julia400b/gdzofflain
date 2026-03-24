@@ -48,6 +48,110 @@ const BUNDLED_ASSETS = [
     'data/geometry-reshak-import.json'
 ];
 const BOOTSTRAP_KEY = 'gdz_bootstrapped_v1';
+const GRADE_KEY = 'gdz_selected_grade';
+const SUPPORTED_GRADES = [7, 8];
+const OFFLINE_CACHE_NAME = 'offlinegdz-v7';
+
+function getSelectedGrade() {
+    const grade = Number(localStorage.getItem(GRADE_KEY));
+    return SUPPORTED_GRADES.includes(grade) ? grade : null;
+}
+
+function setSelectedGrade(grade) {
+    if (SUPPORTED_GRADES.includes(grade)) {
+        localStorage.setItem(GRADE_KEY, String(grade));
+    }
+}
+
+function clearSelectedGrade() {
+    localStorage.removeItem(GRADE_KEY);
+    currentScreen = null;
+    currentTextbookId = null;
+    currentTaskId = null;
+    solutionContext = [];
+}
+
+function extractSupportedGrades(value) {
+    const text = (value || '').toString().toLowerCase();
+    if (!text) return null;
+
+    const rangeMatch = text.match(/(\d+)\s*[-–—]\s*(\d+)\s*класс/);
+    if (rangeMatch) {
+        const start = Number(rangeMatch[1]);
+        const end = Number(rangeMatch[2]);
+        if (Number.isFinite(start) && Number.isFinite(end) && start <= end) {
+            const grades = [];
+            for (let grade = start; grade <= end; grade += 1) {
+                grades.push(grade);
+            }
+            return grades;
+        }
+    }
+
+    const singleMatch = text.match(/(\d+)\s*класс/);
+    if (singleMatch) {
+        const grade = Number(singleMatch[1]);
+        if (Number.isFinite(grade)) return [grade];
+    }
+
+    return null;
+}
+
+function textbookGradeLabel(item) {
+    return [
+        item?.seriesTitle,
+        item?.textbookSeriesTitle,
+        item?.title,
+        item?.textbookTitle
+    ].find(Boolean) || '';
+}
+
+function matchesSelectedGrade(item, selectedGrade = getSelectedGrade()) {
+    if (!selectedGrade) return true;
+    const supportedGrades = extractSupportedGrades(textbookGradeLabel(item));
+    return !supportedGrades || supportedGrades.includes(selectedGrade);
+}
+
+function filterBySelectedGrade(items, selectedGrade = getSelectedGrade()) {
+    return items.filter(item => matchesSelectedGrade(item, selectedGrade));
+}
+
+function gradeSubtitle() {
+    const grade = getSelectedGrade();
+    return grade ? `${grade} класс` : '';
+}
+
+function renderGradePicker() {
+    setTopBar('ГДЗ Офлайн', 'Выберите свой класс', false);
+    $('#bottomNav').classList.add('hidden');
+    $('#topActions').innerHTML = '';
+
+    content().innerHTML = `
+    <div class="gradient-header">
+        <h2>🎓 Мой класс</h2>
+        <p>Выберите класс, чтобы видеть только свои учебники</p>
+    </div>
+    <div class="grade-select-grid">
+        <button class="card grade-select-card" data-grade="7">
+            <div class="grade-select-badge">7</div>
+            <h3>7 класс</h3>
+            <p>Показывать только учебники для 7 класса</p>
+        </button>
+        <button class="card grade-select-card" data-grade="8">
+            <div class="grade-select-badge">8</div>
+            <h3>8 класс</h3>
+            <p>Показывать только учебники для 8 класса</p>
+        </button>
+    </div>`;
+
+    $$('[data-grade]', content()).forEach(el => {
+        el.addEventListener('click', () => {
+            const grade = Number(el.dataset.grade);
+            setSelectedGrade(grade);
+            switchTab(currentTab || 'library');
+        });
+    });
+}
 
 // === Init ===
 async function init() {
@@ -135,6 +239,11 @@ function switchTab(tab) {
     $('#topActions').innerHTML = '';
     $('#topSubtitle').textContent = '';
 
+    if (!getSelectedGrade()) {
+        renderGradePicker();
+        return;
+    }
+
     switch (tab) {
         case 'library': renderLibrary(); break;
         case 'search': renderSearch(); break;
@@ -179,9 +288,15 @@ function showToast(msg) {
 
 // === Library Tab ===
 async function renderLibrary() {
-    setTopBar('ГДЗ Офлайн', '', false);
+    const selectedGrade = getSelectedGrade();
+    if (!selectedGrade) {
+        renderGradePicker();
+        return;
+    }
+
+    setTopBar('ГДЗ Офлайн', gradeSubtitle(), false);
     const subjects = await db.getSubjects();
-    const textbooks = await db.getTextbooks();
+    const textbooks = filterBySelectedGrade(await db.getTextbooks(), selectedGrade);
     const tasks = await db._all('tasks');
 
     const tbBySubject = {};
@@ -193,7 +308,8 @@ async function renderLibrary() {
         taskCountByTb[t.textbookId] = (taskCountByTb[t.textbookId] || 0) + 1;
     }
 
-    const sorted = subjects.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0) || a.name.localeCompare(b.name));
+    const visibleSubjects = subjects.filter(subject => (tbBySubject[subject.id] || []).length > 0);
+    const sorted = visibleSubjects.sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0) || a.name.localeCompare(b.name));
 
     let html = `<div class="gradient-header"><h2>📚 Библиотека</h2><p>Все загруженные предметы и учебники</p></div>`;
 
@@ -249,6 +365,13 @@ async function openTextbook(textbookId) {
 async function renderTextbookContent(textbookId) {
     const tb = await db.getTextbook(textbookId);
     if (!tb) { showToast('Учебник не найден'); return; }
+    if (!matchesSelectedGrade(tb)) {
+        currentScreen = null;
+        currentTextbookId = null;
+        showToast('Этот учебник скрыт для выбранного класса');
+        switchTab('library');
+        return;
+    }
 
     const subjects = await db.getSubjects();
     const subject = subjects.find(s => s.id === tb.subjectId);
@@ -353,6 +476,11 @@ async function openSolution(taskId) {
     if (!task) { showToast('Задание не найдено'); return; }
 
     const tb = await db.getTextbook(task.textbookId);
+    if (!matchesSelectedGrade(tb)) {
+        showToast('Это решение скрыто для выбранного класса');
+        goBack();
+        return;
+    }
     const subjects = await db.getSubjects();
     const subject = subjects.find(s => s.id === tb?.subjectId);
 
@@ -537,8 +665,16 @@ function bindImageClicks() {
 
 // === Search Tab ===
 async function renderSearch() {
-    setTopBar('ГДЗ Офлайн', '', false);
-    const subjects = await db.getSubjects();
+    const selectedGrade = getSelectedGrade();
+    if (!selectedGrade) {
+        renderGradePicker();
+        return;
+    }
+
+    setTopBar('ГДЗ Офлайн', gradeSubtitle(), false);
+    const textbooks = filterBySelectedGrade(await db.getTextbooks(), selectedGrade);
+    const visibleSubjectIds = new Set(textbooks.map(tb => tb.subjectId));
+    const subjects = (await db.getSubjects()).filter(subject => visibleSubjectIds.has(subject.id));
 
     let html = `
     <div class="search-input-wrap">
@@ -596,7 +732,7 @@ async function doSearch(query, subjectId) {
         return;
     }
 
-    const results = await db.searchTasks(query, subjectId);
+    const results = filterBySelectedGrade(await db.searchTasks(query, subjectId));
 
     if (results.length === 0) {
         resultsDiv.innerHTML = emptyCardHtml('🔍', 'Ничего не найдено', 'Попробуйте другой запрос');
@@ -612,8 +748,14 @@ async function doSearch(query, subjectId) {
 
 // === Favorites Tab ===
 async function renderFavorites() {
-    setTopBar('ГДЗ Офлайн', '', false);
-    const favorites = await db.getFavorites();
+    const selectedGrade = getSelectedGrade();
+    if (!selectedGrade) {
+        renderGradePicker();
+        return;
+    }
+
+    setTopBar('ГДЗ Офлайн', gradeSubtitle(), false);
+    const favorites = filterBySelectedGrade(await db.getFavorites(), selectedGrade);
 
     let html = `<div class="gradient-header"><h2>❤️ Избранное</h2><p>${favorites.length} заданий</p></div>`;
 
@@ -630,8 +772,14 @@ async function renderFavorites() {
 
 // === History Tab ===
 async function renderHistory() {
-    setTopBar('ГДЗ Офлайн', '', false);
-    const history = await db.getHistory();
+    const selectedGrade = getSelectedGrade();
+    if (!selectedGrade) {
+        renderGradePicker();
+        return;
+    }
+
+    setTopBar('ГДЗ Офлайн', gradeSubtitle(), false);
+    const history = filterBySelectedGrade(await db.getHistory(), selectedGrade);
 
     let html = `<div class="gradient-header"><h2>🕐 История</h2><p>Последние просмотренные</p></div>`;
 
@@ -662,16 +810,29 @@ async function renderHistory() {
 
 // === More Tab ===
 async function renderMore() {
-    setTopBar('ГДЗ Офлайн', '', false);
+    const selectedGrade = getSelectedGrade();
+    if (!selectedGrade) {
+        renderGradePicker();
+        return;
+    }
+
+    setTopBar('ГДЗ Офлайн', gradeSubtitle(), false);
     const subjects = await db.getSubjects();
-    const textbooks = await db.getTextbooks();
-    const favorites = await db.getFavorites();
+    const textbooks = filterBySelectedGrade(await db.getTextbooks(), selectedGrade);
+    const favorites = filterBySelectedGrade(await db.getFavorites(), selectedGrade);
+    const visibleSubjectCount = new Set(textbooks.map(tb => tb.subjectId)).size;
 
     let html = `
     <div class="gradient-header"><h2>⚙️ Настройки</h2><p>Управление данными</p></div>
 
+    <div class="card import-section">
+        <h3>🎓 Мой класс</h3>
+        <p>Сейчас выбран: ${selectedGrade} класс</p>
+        <button class="btn-tonal" id="changeGradeBtn">Сменить класс</button>
+    </div>
+
     <div class="stats-row">
-        <div class="card stat-card"><div class="stat-value">${subjects.length}</div><div class="stat-label">Предметов</div></div>
+        <div class="card stat-card"><div class="stat-value">${visibleSubjectCount}</div><div class="stat-label">Предметов</div></div>
         <div class="card stat-card"><div class="stat-value">${textbooks.length}</div><div class="stat-label">Учебников</div></div>
         <div class="card stat-card"><div class="stat-value">${favorites.length}</div><div class="stat-label">Избранных</div></div>
     </div>
@@ -725,6 +886,14 @@ async function renderMore() {
     </div>`;
 
     content().innerHTML = html;
+
+    const changeGradeBtn = $('#changeGradeBtn');
+    if (changeGradeBtn) {
+        changeGradeBtn.addEventListener('click', () => {
+            clearSelectedGrade();
+            renderGradePicker();
+        });
+    }
 
     // Import handler
     const fileInput = $('#jsonFileInput');
@@ -825,7 +994,7 @@ async function downloadAllImagesForOffline() {
     const progressText = $('#progressText');
     if (progressDiv) progressDiv.classList.remove('hidden');
 
-    const cache = await caches.open('offlinegdz-v5');
+    const cache = await caches.open(OFFLINE_CACHE_NAME);
     let done = 0, failed = 0, skipped = 0;
     const total = urls.length;
 

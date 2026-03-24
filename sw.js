@@ -1,4 +1,4 @@
-const CACHE_NAME = 'offlinegdz-v6';
+const CACHE_NAME = 'offlinegdz-v7';
 const ASSETS = [
     './',
     './index.html',
