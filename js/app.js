@@ -45,15 +45,13 @@ const BUNDLED_ASSETS = [
     'data/biology-gdz-import.json',
     'data/chemistry-8-gabrielyan-euroki.json',
     'data/geography-euroki-import.json',
-    'data/geometry-reshak-import.json',
-    'data/russian7-baranov-budu5.json'
+    'data/geometry-reshak-import.json'
 ];
 const BOOTSTRAP_KEY = 'gdz_bootstrapped_v1';
-const RUSSIAN7_MIGRATION_KEY = 'gdz_migration_russian7_baranov_parts_v1';
-const RUSSIAN7_ASSET = 'data/russian7-baranov-budu5.json';
+const RUSSIAN7_DELETE_KEY = 'gdz_delete_russian7_baranov_from_pwa_v1';
 const GRADE_KEY = 'gdz_selected_grade';
 const SUPPORTED_GRADES = [7, 8];
-const OFFLINE_CACHE_NAME = 'offlinegdz-v11';
+const OFFLINE_CACHE_NAME = 'offlinegdz-v12';
 
 function getSelectedGrade() {
     const grade = Number(localStorage.getItem(GRADE_KEY));
@@ -276,65 +274,39 @@ async function bootstrapBundledData() {
 }
 
 async function runBundledMigrations() {
-    await ensureRussian7BundledParts();
+    await removeRussian7BundledTextbooks();
 }
 
-async function ensureRussian7BundledParts() {
-    if (localStorage.getItem(RUSSIAN7_MIGRATION_KEY)) return;
+async function removeRussian7BundledTextbooks() {
+    if (localStorage.getItem(RUSSIAN7_DELETE_KEY)) return;
 
     try {
         const textbooks = await db.getTextbooks();
         const russian7Books = textbooks.filter(isRussian7BaranovBook);
-        const hasPart1 = russian7Books.some(book => isBookPart(book, 'Часть 1'));
-        const hasPart2 = russian7Books.some(book => isBookPart(book, 'Часть 2'));
-
-        if (hasPart1 && hasPart2) {
-            localStorage.setItem(RUSSIAN7_MIGRATION_KEY, Date.now().toString());
+        if (russian7Books.length === 0) {
+            localStorage.setItem(RUSSIAN7_DELETE_KEY, Date.now().toString());
             return;
         }
 
-        const response = await fetch(RUSSIAN7_ASSET);
-        if (!response.ok) return;
-
-        const text = await response.text();
-        const payload = JSON.parse(normalizeJson(text));
-        const subject = payload?.subjects?.find(item => normalizeLookupText(item?.name) === 'русский язык');
-        if (!subject) return;
-        const subjectBooks = subject?.textbooks || [];
-
-        const missingBooks = subjectBooks.filter(book => {
-            if (!isRussian7BaranovBook(book)) return false;
-            if (russian7Books.length === 0) return true;
-            if (!hasPart1 && isBookPart(book, 'Часть 1')) return true;
-            if (!hasPart2 && isBookPart(book, 'Часть 2')) return true;
-            return false;
-        });
-
-        if (missingBooks.length === 0) {
-            localStorage.setItem(RUSSIAN7_MIGRATION_KEY, Date.now().toString());
-            return;
+        const deletedIds = new Set(russian7Books.map(book => book.id));
+        for (const book of russian7Books) {
+            await db.deleteTextbook(book.id);
         }
 
-        const result = await db.importPayload({
-            subjects: [{
-                name: subject.name,
-                sort_order: subject.sort_order,
-                textbooks: missingBooks
-            }]
-        });
-
-        if (result.importedTasks > 0) {
-            showToast(missingBooks.length > 1
-                ? 'Добавлены части учебника русского языка'
-                : 'Добавлена недостающая часть учебника русского языка');
-            if (currentTab === 'library' && !currentScreen) {
-                renderLibrary();
-            }
+        if (currentTextbookId && deletedIds.has(currentTextbookId)) {
+            currentTextbookId = null;
+            currentTaskId = null;
+            currentScreen = null;
+            solutionContext = [];
+            switchTab('library');
+        } else if (!currentScreen) {
+            renderLibrary();
         }
 
-        localStorage.setItem(RUSSIAN7_MIGRATION_KEY, Date.now().toString());
+        showToast('Учебник русского языка удалён из PWA');
+        localStorage.setItem(RUSSIAN7_DELETE_KEY, Date.now().toString());
     } catch (error) {
-        console.warn('Russian 7 migration failed', error);
+        console.warn('Russian 7 removal failed', error);
     }
 }
 
