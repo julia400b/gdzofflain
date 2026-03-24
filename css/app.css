@@ -505,6 +505,28 @@ body {
     margin-top: 12px;
 }
 
+.question-group {
+    border: 1px solid rgba(21,101,192,0.12);
+    border-radius: 14px;
+    background: rgba(21,101,192,0.04);
+    padding: 14px;
+}
+
+.question-prompt {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--primary-dark);
+}
+
+.question-answer {
+    margin-top: 12px;
+}
+
+.question-answer > * + * {
+    margin-top: 10px;
+}
+
 .block-paragraph {
     font-size: 14px;
     line-height: 1.7;

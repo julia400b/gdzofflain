@@ -586,10 +586,114 @@ function renderEditionSectionsInner(edition) {
     for (const section of edition.sections) {
         html += `<div class="solution-section">`;
         if (section.title) html += `<h3>${esc(section.title)}</h3>`;
-        html += renderBlocks(section.blocks);
+        html += renderSectionContent(section);
         html += `</div>`;
     }
     return html;
+}
+
+function renderSectionContent(section) {
+    const structured = buildQuestionStructure(section);
+    if (!structured) {
+        return renderBlocks(section.blocks);
+    }
+
+    let html = '';
+    if (structured.introBlocks.length) {
+        html += renderBlocks(structured.introBlocks);
+    }
+
+    for (const group of structured.groups) {
+        html += `
+        <div class="question-group">
+            <div class="question-prompt">${renderInlineMarkdown(group.prompt.text)}</div>
+            ${group.answerBlocks.length ? `<div class="question-answer">${renderBlocks(group.answerBlocks)}</div>` : ''}
+        </div>`;
+    }
+
+    return html;
+}
+
+function buildQuestionStructure(section) {
+    const blocks = Array.isArray(section?.blocks) ? section.blocks : [];
+    if (!blocks.length) return null;
+
+    const normalizedTitle = normalizeHeader(section?.title || '');
+    const introBlocks = [];
+    const groups = [];
+    let currentGroup = null;
+
+    for (let index = 0; index < blocks.length; index += 1) {
+        const block = blocks[index];
+        const isPrompt = block.type === 'numbered_item'
+            || (normalizedTitle === 'Вопрос' && groups.length === 0 && introBlocks.length === 0 && isQuestionTextBlock(block));
+
+        if (isPrompt) {
+            const splitPrompt = splitQuestionPromptAndAnswer(block.text);
+            currentGroup = {
+                prompt: {
+                    type: 'question_prompt',
+                    text: splitPrompt?.prompt || block.text || ''
+                },
+                answerBlocks: splitPrompt?.answer ? [{ type: 'paragraph', text: splitPrompt.answer }] : []
+            };
+            groups.push(currentGroup);
+            continue;
+        }
+
+        if (currentGroup) {
+            currentGroup.answerBlocks.push(block);
+        } else {
+            introBlocks.push(block);
+        }
+    }
+
+    return groups.length ? { introBlocks, groups } : null;
+}
+
+function isQuestionTextBlock(block) {
+    return ['paragraph', 'emphasis', 'header', 'numbered_item'].includes(block?.type);
+}
+
+function splitQuestionPromptAndAnswer(text) {
+    const raw = (text || '').trim();
+    if (!raw) return null;
+
+    const numberedMatch = raw.match(/^((?:\d+[.)]|[а-яa-z]\))\s*)(.+)$/i);
+    const prefix = numberedMatch ? numberedMatch[1] : '';
+    const body = numberedMatch ? numberedMatch[2].trim() : raw;
+
+    const sentences = body.match(/[^.!?]+[.!?]+|[^.!?]+$/g)?.map(item => item.trim()).filter(Boolean) || [];
+    if (sentences.length < 2) return null;
+
+    let prompt = '';
+    let best = null;
+
+    for (let index = 0; index < sentences.length - 1; index += 1) {
+        prompt = `${prompt}${prompt ? ' ' : ''}${sentences[index]}`.trim();
+        const answer = sentences.slice(index + 1).join(' ').trim();
+        if (!answer || answer.length < 35) continue;
+
+        const promptLooksLikeQuestion = looksLikeQuestionPrompt(prompt);
+        const answerLooksLikeQuestion = looksLikeQuestionPrompt(answer);
+        if (promptLooksLikeQuestion && !answerLooksLikeQuestion) {
+            best = {
+                prompt: `${prefix}${prompt}`.trim(),
+                answer
+            };
+            break;
+        }
+    }
+
+    return best;
+}
+
+function looksLikeQuestionPrompt(text) {
+    const sample = (text || '').trim();
+    if (!sample) return false;
+    if (sample.includes('?')) return true;
+
+    return /\b(что|как|почему|зачем|какие?|какой|какова?|сколько|когда|где|кто|чем|объясните|сравните|охарактеризуйте|запишите|подготовьте|посмотрите|вспомните|сформулируйте|опишите|приведите|назовите|укажите|определите|рассмотрите|сделайте|вычислите|перечислите)\b/i.test(sample);
 }
 
 function renderBlocks(blocks) {
