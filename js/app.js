@@ -235,10 +235,22 @@ async function renderTextbookContent(textbookId) {
 
     const tasks = await db.getTasksByTextbook(textbookId);
     tasks.sort((a, b) => {
-        const aNum = parseInt(a.taskNumber) || 999999;
-        const bNum = parseInt(b.taskNumber) || 999999;
+        // Extract numeric values for proper natural sorting
+        const aNum = parseFloat(a.taskNumber) || 0;
+        const bNum = parseFloat(b.taskNumber) || 0;
         if (aNum !== bNum) return aNum - bNum;
-        return (a.paragraph || '').localeCompare(b.paragraph || '');
+
+        // Sort by paragraph number (§1, §2, ... §10, §11)
+        const aPara = parseFloat((a.paragraph || '').replace(/[^0-9.]/g, '')) || 0;
+        const bPara = parseFloat((b.paragraph || '').replace(/[^0-9.]/g, '')) || 0;
+        if (aPara !== bPara) return aPara - bPara;
+
+        // Sort by page
+        const aPage = a.page || 0;
+        const bPage = b.page || 0;
+        if (aPage !== bPage) return aPage - bPage;
+
+        return 0;
     });
 
     solutionContext = tasks.map(t => t.id);
